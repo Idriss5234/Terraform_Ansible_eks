@@ -1,0 +1,18 @@
+--- # before that install requirements
+- name: deploy app in k8s namespace
+  hosts: localhost
+  tasks:
+    - name: create a k8s namespace
+      k8s:
+        name: my-app
+        api_version: v1
+        kind: namespace
+        state: present
+        #kubeconfig: path too our config file in tf folder     we could not wrtie this if we export it as a global var
+
+    - name: deploy nginx app
+      k8s:
+        src: # path to nginx deployment file
+        state: present
+        #kubeconfig: path too our config file in tf folder   we could not wrtie this if we export it as a global var
+        namespace: my-app
